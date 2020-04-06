@@ -1,5 +1,8 @@
 package com.example.traveljournal;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,16 +16,20 @@ import androidx.annotation.NonNull;
         import com.example.traveljournal.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class TripItemViewHolder extends RecyclerView.ViewHolder {
 
+    private Context context;
     private ImageView imageView;
     private TextView textView;
     private RatingBar ratingBar;
     private Trip trip;
     private ImageButton deleteButton;
+    private FloatingActionButton fabDelete;
+    private static final String ID_KEY = "trip_id";
 
     public ImageView getImageView() {
         return imageView;
@@ -63,8 +70,8 @@ public class TripItemViewHolder extends RecyclerView.ViewHolder {
         ratingBar = itemView.findViewById(R.id.rateTrip);
         textView = itemView.findViewById(R.id.tripName);
         imageView = itemView.findViewById(R.id.imageView3);
-        deleteButton = itemView.findViewById(R.id.imageButton);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        fabDelete = itemView.findViewById(R.id.floatingActionButton);
+        fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -78,11 +85,41 @@ public class TripItemViewHolder extends RecyclerView.ViewHolder {
                             public void onSuccess(Void aVoid) {
                             }
                         }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                        }
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
                 });
             }
         });
+
+        context = itemView.getContext();
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mIntent = new Intent(context, TripGallery.class);
+                mIntent.putExtra(ID_KEY, trip.getId());
+                context.startActivity(mIntent);
+            }
+        });
+
+//        deleteButton = itemView.findViewById(R.id.imageButton);
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FirebaseFirestore database = FirebaseFirestore.getInstance();
+//                database.collection("users")
+//                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                        .collection("trips")
+//                        .document(trip.getId())
+//                        .delete()
+//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void aVoid) {
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                        }
+//                });
     }
 }

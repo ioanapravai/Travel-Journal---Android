@@ -2,12 +2,32 @@ package com.example.traveljournal;
 
 import android.widget.RatingBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Trip {
     private String name;
     private String id;
     private int rating;
     private String url;
+    private String downloadUrl;
+    private ArrayList<String> photoUrls;
 
+    public List<String> getPhotoUrls() {
+        return photoUrls;
+    }
+
+    public void setPhotoUrls(ArrayList<String> photoUrls) {
+        this.photoUrls = photoUrls;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
 
     public String getUrl() {
         return url;
