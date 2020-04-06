@@ -12,15 +12,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.traveljournal.CustomLinearLayoutManager;
 import com.example.traveljournal.R;
 import com.example.traveljournal.Trip;
 import com.example.traveljournal.TripItemViewHolder;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +36,14 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private RecyclerView recyclerViewTrip;
     private FirestoreRecyclerAdapter adapter;
+    private StorageReference storageReference;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private Context context = getActivity();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -67,16 +75,25 @@ public class HomeFragment extends Fragment {
         final Context context = this.getActivity().getBaseContext();
         adapter = new FirestoreRecyclerAdapter<Trip, TripItemViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull TripItemViewHolder holder, int position, @NonNull Trip model) {
+            protected void onBindViewHolder(@NonNull final TripItemViewHolder holder, int position, @NonNull Trip model) {
                 holder.setTrip(model);
                 holder.getTextView().setText(model.getName());
                 holder.getRatingBar().setRating(model.getRating());
-                if(model.getUrl() != null && !model.getUrl().isEmpty()){
-                    Picasso.get().load(model.getUrl())
-                            .resize(100, 100)
-                            .centerInside()
-                            .into(holder.getImageView());
+                if(!model.getDownloadUrl().isEmpty() && model.getDownloadUrl() != null){
+                    storageReference = storage.getReference().child(auth.getCurrentUser().getUid() + "/")
+                            .child(model.getId() + "/").child(model.getDownloadUrl());
+                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+                    {
+                        @Override
+                        public void onSuccess(Uri downloadUrl)
+                        {
+                            Glide.with(context)
+                                    .load(downloadUrl.toString())
+                                    .into(holder.getImageView());
+                        }
+                    });
                 }
+
             }
 
             @NonNull

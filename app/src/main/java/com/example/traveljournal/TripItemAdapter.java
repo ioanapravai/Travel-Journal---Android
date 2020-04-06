@@ -26,7 +26,6 @@ public class TripItemAdapter extends RecyclerView.Adapter<TripItemViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TripItemViewHolder holder, int position) {
-        //spune ce sa puna in view
         Trip currentTrip = trips.get(position);
         holder.getTextView().setText(currentTrip.getName());
 

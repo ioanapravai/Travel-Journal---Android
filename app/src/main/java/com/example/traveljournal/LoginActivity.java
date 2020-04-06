@@ -35,11 +35,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         button = findViewById(R.id.login);
-
-        // Set the dimensions of the sign-in button.
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+        //finish();
     }
 
     @Override
@@ -75,13 +74,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             if(resultCode == RESULT_OK) {
                 // successfully signed in
-               // TextView textView = findViewById(R.id.emailTextView);
                 FirebaseFirestore database = FirebaseFirestore.getInstance();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-               /* if(user != null){
-                    String email = user.getEmail();
-                    textView.setText(email);
-                }*/
                 Map<String, Object> userMap = new HashMap<>();
                 userMap.put("email", user.getEmail());
                 database.collection("users").document(user.getUid()).set(userMap);
@@ -94,7 +88,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void loginButtonOnClick(View view) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
     }
 
 
