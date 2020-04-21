@@ -11,7 +11,7 @@ public class Trip {
     private int rating;
     private String url;
     private String downloadUrl;
-    private ArrayList<String> photoUrls;
+    private ArrayList<String> photoUrls = new ArrayList<>();
 
     public List<String> getPhotoUrls() {
         return photoUrls;

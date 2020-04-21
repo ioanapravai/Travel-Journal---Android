@@ -87,7 +87,13 @@ public class TripGallery extends AppCompatActivity {
                         gridView = findViewById(R.id.grid_view_trip_gallery);
                         gridView.setAdapter(new TripGalleryImageAdapter(context, trip));
                     }
-                });
+                })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
 
 
 

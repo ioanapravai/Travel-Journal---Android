@@ -71,6 +71,9 @@ public class TripItemViewHolder extends RecyclerView.ViewHolder {
         textView = itemView.findViewById(R.id.tripName);
         imageView = itemView.findViewById(R.id.imageView3);
         fabDelete = itemView.findViewById(R.id.floatingActionButton);
+        textView.bringToFront();
+        ratingBar.bringToFront();
+        fabDelete.bringToFront();
         fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
