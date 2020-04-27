@@ -16,10 +16,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".LauncherActivity"></activity>
         <activity android:name=".TripGallery" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".BadgeActivity">
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
