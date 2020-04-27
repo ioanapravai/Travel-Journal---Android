@@ -1,6 +1,8 @@
 package com.example.traveljournal.ui.send;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.traveljournal.BadgeActivity;
+import com.example.traveljournal.LauncherActivity;
+import com.example.traveljournal.LoginActivity;
 import com.example.traveljournal.R;
 
 public class SendFragment extends Fragment {
