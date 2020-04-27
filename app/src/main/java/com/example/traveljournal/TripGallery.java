@@ -33,11 +33,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.UUID;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TripGallery extends AppCompatActivity {
 
     private Context context;
     private TextView textView;
-    private ImageView imageView;
+    private CircleImageView imageView;
     private Trip trip;
     private GridView gridView;
     private static final String ID_KEY = "trip_id";

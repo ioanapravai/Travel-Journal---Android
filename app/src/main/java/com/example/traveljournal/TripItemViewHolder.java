@@ -20,10 +20,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TripItemViewHolder extends RecyclerView.ViewHolder {
 
+    private CircleImageView imageView;
     private Context context;
-    private ImageView imageView;
     private TextView textView;
     private RatingBar ratingBar;
     private Trip trip;
@@ -35,7 +37,7 @@ public class TripItemViewHolder extends RecyclerView.ViewHolder {
         return imageView;
     }
 
-    public void setImageView(ImageView imageView) {
+    public void setImageView(CircleImageView imageView) {
         this.imageView = imageView;
     }
 
