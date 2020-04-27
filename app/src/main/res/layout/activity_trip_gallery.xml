@@ -34,6 +34,7 @@
             android:orientation="horizontal">
 
 
+
             <ImageView
                 android:id="@+id/ImageViewTripIcon"
                 android:layout_width="128dp"
@@ -99,7 +100,7 @@
             android:layout_gravity="end|bottom"
             app:borderWidth="0dp"
             app:elevation="8dp"
-            app:fabSize="normal"/>
+            app:fabSize="normal" />
 
     </FrameLayout>
 

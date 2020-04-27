@@ -105,24 +105,5 @@ public class TripItemViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-//        deleteButton = itemView.findViewById(R.id.imageButton);
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseFirestore database = FirebaseFirestore.getInstance();
-//                database.collection("users")
-//                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                        .collection("trips")
-//                        .document(trip.getId())
-//                        .delete()
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                        }
-//                });
     }
 }
