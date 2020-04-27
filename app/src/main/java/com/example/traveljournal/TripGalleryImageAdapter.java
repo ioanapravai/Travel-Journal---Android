@@ -17,6 +17,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TripGalleryImageAdapter extends BaseAdapter {
 
     private Context mContext;
