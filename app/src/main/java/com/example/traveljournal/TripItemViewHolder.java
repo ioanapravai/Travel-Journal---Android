@@ -11,7 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
         import com.example.traveljournal.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,9 +27,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class TripItemViewHolder extends RecyclerView.ViewHolder {
 
     private CircleImageView imageView;
+    private ImageView imageViewStar;
     private Context context;
     private TextView textView;
-    private RatingBar ratingBar;
     private Trip trip;
     private ImageButton deleteButton;
     private FloatingActionButton fabDelete;
@@ -46,10 +48,6 @@ public class TripItemViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public void setRatingBar(RatingBar ratingBar) {
-        this.ratingBar = ratingBar;
-    }
-
     public Trip getTrip() {
         return trip;
     }
@@ -59,44 +57,17 @@ public class TripItemViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public RatingBar getRatingBar() {
-        return ratingBar;
-    }
-
     public TextView getTextView() {
         return textView;
     }
 
     public TripItemViewHolder(@NonNull final View itemView) {
         super(itemView);
-        ratingBar = itemView.findViewById(R.id.rateTrip);
         textView = itemView.findViewById(R.id.tripName);
         imageView = itemView.findViewById(R.id.imageView3);
-        fabDelete = itemView.findViewById(R.id.floatingActionButton);
+        imageViewStar = itemView.findViewById(R.id.imageViewStar);
         textView.bringToFront();
-        ratingBar.bringToFront();
-        fabDelete.bringToFront();
-        fabDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseFirestore database = FirebaseFirestore.getInstance();
-                database.collection("users")
-                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .collection("trips")
-                        .document(trip.getId())
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                    }
-                });
-            }
-        });
-
+        imageViewStar.bringToFront();
         context = itemView.getContext();
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +77,7 @@ public class TripItemViewHolder extends RecyclerView.ViewHolder {
                 context.startActivity(mIntent);
             }
         });
-
     }
+
+
 }

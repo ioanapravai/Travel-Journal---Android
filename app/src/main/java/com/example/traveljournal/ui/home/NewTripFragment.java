@@ -51,7 +51,6 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class NewTripFragment extends DialogFragment {
 
     private TextView textView;
-    private RatingBar ratingBar;
     private ImageView imageView;
     private Trip trip = new Trip();
     private static final int PICK_PHOTO = 914;
@@ -94,12 +93,10 @@ public class NewTripFragment extends DialogFragment {
                         dialogInterface = dialog;
                         // call the method on the parent activity when user click the positive button
                         textView = view.findViewById(R.id.tripName);
-                        ratingBar = view.findViewById(R.id.ratingBarTrip);
                         imageView = view.findViewById(R.id.imageView4);
                         storage = FirebaseStorage.getInstance();
                         storageReference = storage.getReference();
                         dataBase = FirebaseFirestore.getInstance();
-                        trip.setRating(ratingBar.getNumStars());
                         trip.setName(textView.getText().toString());
                         createTripId();
                         uploadImage();

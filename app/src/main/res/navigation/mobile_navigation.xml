@@ -40,4 +40,9 @@
         android:name="com.example.traveljournal.ui.send.SendFragment"
         android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
+    <fragment
+        android:id="@+id/nav_maps"
+        android:name="com.example.traveljournal.MapsActivity"
+        android:label="Map"
+        tools:layout="@layout/activity_maps" />
 </navigation>

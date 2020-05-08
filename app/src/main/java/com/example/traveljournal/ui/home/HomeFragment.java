@@ -1,5 +1,6 @@
 package com.example.traveljournal.ui.home;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,9 +19,11 @@ import com.bumptech.glide.Glide;
 import com.example.traveljournal.CustomLinearLayoutManager;
 import com.example.traveljournal.R;
 import com.example.traveljournal.Trip;
+import com.example.traveljournal.TripGallery;
 import com.example.traveljournal.TripItemViewHolder;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,12 +44,14 @@ public class HomeFragment extends Fragment {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private Context context = getActivity();
+    private Trip trip;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -78,8 +84,7 @@ public class HomeFragment extends Fragment {
             protected void onBindViewHolder(@NonNull final TripItemViewHolder holder, int position, @NonNull Trip model) {
                 holder.setTrip(model);
                 holder.getTextView().setText(model.getName());
-                holder.getRatingBar().setRating(model.getRating());
-                if(!model.getDownloadUrl().isEmpty() && model.getDownloadUrl() != null){
+                if(model.getDownloadUrl() != null && !model.getDownloadUrl().isEmpty()){
                     storageReference = storage.getReference().child(auth.getCurrentUser().getUid() + "/")
                             .child(model.getId() + "/").child(model.getDownloadUrl());
                     storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
@@ -104,7 +109,7 @@ public class HomeFragment extends Fragment {
                 return new TripItemViewHolder(view);
             }
         };
-
+        new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerViewTrip);
         recyclerViewTrip.setAdapter(adapter);
     }
 
@@ -119,4 +124,34 @@ public class HomeFragment extends Fragment {
         super.onStop();
         adapter.stopListening();
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            TripItemViewHolder tripItemViewHolder = (TripItemViewHolder)viewHolder;
+            trip = tripItemViewHolder.getTrip();
+            FirebaseFirestore database = FirebaseFirestore.getInstance();
+            database.collection("users")
+                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .collection("trips")
+                    .document(trip.getId())
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+
+
+        }
+    };
 }
