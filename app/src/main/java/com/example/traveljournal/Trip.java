@@ -1,6 +1,5 @@
 package com.example.traveljournal;
 
-import android.widget.RatingBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 public class Trip {
     private String name;
     private String id;
-    private int rating;
     private String url;
     private String downloadUrl;
     private ArrayList<String> photoUrls = new ArrayList<>();
@@ -37,14 +35,6 @@ public class Trip {
         this.url = url;
     }
 
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
     public String getId() {
         return id;
     }
@@ -71,7 +61,6 @@ public class Trip {
     public Trip(String name, String id, int rating, String url) {
         this.name = name;
         this.id = id;
-        this.rating = rating;
         this.url = url;
     }
 }
