@@ -29,4 +29,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/spinnerChooseCountry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tripName"
+        app:layout_constraintVertical_bias="0.24000001" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.example.traveljournal;
 
 
+import com.example.traveljournal.utils.Country;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ public class Trip {
     private String url;
     private String downloadUrl;
     private ArrayList<String> photoUrls = new ArrayList<>();
+    private ArrayList<Country> countryCodes = new ArrayList<>();
 
     public List<String> getPhotoUrls() {
         return photoUrls;
