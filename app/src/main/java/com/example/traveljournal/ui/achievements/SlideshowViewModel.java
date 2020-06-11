@@ -1,4 +1,4 @@
-package com.example.traveljournal.ui.slideshow;
+package com.example.traveljournal.ui.achievements;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
